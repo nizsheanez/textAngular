@@ -414,7 +414,7 @@ textAngular.directive("textAngular", ['$compile', '$window', '$document', '$root
 			
 			//this code is used to update the models when data is entered/deleted
 			if(isContentEditable){
-				element.on('keyup', function(e){
+				element.on('keyup change', function(e){
 					ngModel.$setViewValue(compileHtml());
 				});
 			}
