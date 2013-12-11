@@ -389,7 +389,7 @@ textAngular.directive("textAngular", ['$compile', '$window', '$document', '$root
 			scope.displayElements.text.on('mouseup', mouseup);
 		}
 	};
-}]).directive('taBind', ['$sanitize', '$document', 'taFixChrome', function($sanitize, $document, taFixChrome){
+}]).directive('taBind', ['$sanitize', '$document', 'taFixChrome', '$compile', function($sanitize, $document, taFixChrome, $compile){
 	// Uses for this are textarea or input with ng-model and ta-bind='text' OR any non-form element with contenteditable="contenteditable" ta-bind="html|text" ng-model
 	return {
 		require: 'ngModel',
@@ -439,8 +439,8 @@ textAngular.directive("textAngular", ['$compile', '$window', '$document', '$root
 					var val = ngModel.$viewValue || ''; // in case model is null
 					ngModel.$oldViewValue = val;
 					if(scope.taBind == 'text'){ //WYSIWYG Mode
-						element.html(val);
-						element.find('a').on('click', function(e){
+              element.html($compile(val)(scope.$parent));
+              element.find('a').on('click', function(e){
 							e.preventDefault();
 							return false;
 						});
